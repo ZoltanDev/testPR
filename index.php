@@ -35,77 +35,58 @@
                                  </div>
 
                                  <div class="form-group">
-                                    <button type="submit" class="btn btn-default btn-sm">Submit</button>
+                                    <button type="submit" class="btn btn-default btn-sm pull-right">Submit</button>
                                  </div>
                             </form>
-                            <div id="response">Rezultat:</div>
+                            <div class="clearfix"></div>
+                            <div id="response">
+                                  <p><label>Country code: </label> <span class="cc"></span></p>
+                                  <p><label>Country identifier: </label> <span class="isoalpha2"></span></p>
+                                  <p><label>MNO identifier: </label> <span class="mno"></span></p>
+                                  <p><label>Subscriber number: </label> <span class="mns"></span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <?php
+        </div>        
+        <script>
+            $(document).ready(function() {
+               
+                $('form button').click(function(event) {
+                    event.preventDefault();
+                    
+                    var encodedData = JSON.stringify ( {
+                        "jsonrpc": "2.0",
+                        "method": "find",
+                        "params":  [$('form input[name="msisdn"]').val()],
+                        "id": 0
+                    }); 
+                    $.ajax({
+                        url: 'src/server.php',
+                        dataType: 'json',
+                        type: 'POST',
+                        data: encodedData,
+                        success: function(data, textStatus, jqXHR) {
+                            
+                            $("#response .cc").html(JSON.parse(JSON.stringify(data.result['cc']), null, 2));
+                            $("#response .isoalpha2").html(JSON.parse(JSON.stringify(data.result['isoalpha2']), null, 2));
+                            $("#response .mno").html(
+                                JSON.parse(JSON.stringify(data.result['mno']), null, 2) + ' (' + 
+                                JSON.parse(JSON.stringify(data.result['mnocode']), null, 2) + ')'
+                              );
+                            $("#response .mns").html(JSON.parse(JSON.stringify(data.result['isoalpha2']), null, 2));
+                        },
+                        error: function(jqXHR, textStatus, errorThrow) {
 
-             function validateMsisdn($number){
-            $number = '38165425698';
-            $chars = ['+','-',' ','/'];
-            $msisdn = str_replace($chars, '', (trim($number)));
-
-            if(substr($msisdn,0,2) == '00'){
-                $msisdn = substr($msisdn, 2, strlen($msisdn));
-            }
-
-            $data = json_decode(file_get_contents('data/data.json'), true);
-            
-            // print_r($data) ;
-            foreach($data as $obj)
-            {   
-                if(($obj['cc'] == substr($msisdn, 0, 3)) && ($obj['mnocode'] == substr($msisdn, 3, 2)))
-                {   
-                    $test = $obj;
-                    // echo $msisdn;
-                }
-            }
-
-            return $test['cc'].' '.$test['isoalpha2'].' '.$test['mno'];
-       }
-
-       echo validateMsisdn(123);
-        ?>
-        
-            <script>
-
-                $(document).ready(function() {
-                   
-                    $('form button').click(function(event) {
-                        event.preventDefault();
-                        
-                        var encodedData = JSON.stringify ( {
-                            "jsonrpc": "2.0",
-                            "method": "test",
-                            "params":  [$('form input[name="msisdn"]').val()],
-                            "id": 15324815
-                        }); 
-                        $.ajax({
-                            url: 'src/parser.php',
-                            dataType: 'json',
-                            type: 'POST',
-                            data: encodedData,
-                            success: function(data, textStatus, jqXHR) {
-                                
-                                $("#response").html(JSON.stringify(data.result[0], null, 2));
-                            },
-                            error: function(jqXHR, textStatus, errorThrow) {
-
-                                $("#response").html('ERROR: ' + errorThrow);
-                            },
-                             headers:{
-                                "Content-Type": "application/json-rpc"
-                            }
-                        });
+                            $("#response").html('ERROR: ' + errorThrow);
+                        },
+                         headers:{
+                            "Content-Type": "application/json-rpc"
+                        }
                     });
                 });
-            </script>
-            
+            });
+        </script>    
     </body>
 </html>

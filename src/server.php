@@ -2,10 +2,13 @@
 
 use JsonRPC\Server;
 
+include 'parser.php';
+
 $server = new Server();
+
 $server->getProcedureHandler()
-    ->withCallback('test', function ($a) {
-        return test($a);
+    ->withCallback('find', function ($number) {
+        return find($number);
     });
 
 echo $server->execute();

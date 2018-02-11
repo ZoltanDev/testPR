@@ -5,11 +5,6 @@
    */
    class Msisdn 
    {
-       
-       function __construct(argument)
-       {
-           # code...
-       }
 
        public function validateMsisdn($number)
        {
