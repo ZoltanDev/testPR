@@ -7,10 +7,11 @@ Make sure you have [Vagrant](https://www.vagrantup.com/) installed.
 
 ## Instructions 
 
-Commands:
+git clone ...
 
-Vagrant up
+cd mydir
 
+vagrant up
 Navigate to: http://localhost:8000/
 
 ## Tests
