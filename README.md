@@ -3,7 +3,7 @@ Takes MSISDN as an input and returns MNO identifier, country dialling code, subs
 
 ## Requirements
 
-Make sure you have Vagrant installed
+Make sure you have [Vagrant](https://www.vagrantup.com/) installed.
 
 ## Instructions 
 
@@ -20,9 +20,9 @@ Navigate to: http://localhost:8000/
 ## RPC-API
 
 The package is exposed through Json RPC API because Json is:
- -lightweight;
- -recognized natively by JavaScript;
- -highly portable, it relies on two fundamental structures:
-    1. A collection of name/value pairs;
-    2. An ordered list of values.
+ * lightweight;
+ * recognized natively by JavaScript;
+ * highly portable, it relies on two fundamental structures:
+    * A collection of name/value pairs;
+    * An ordered list of values.
 
