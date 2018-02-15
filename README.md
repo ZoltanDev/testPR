@@ -1,9 +1,9 @@
-## testPr
+# testPr
 Takes MSISDN as an input and returns MNO identifier, country dialling code, subscriber number and country identifier.
 
 ## Requirements
 
-[Vagrant]("https://www.vagrantup.com/")
+Make sure you have Vagrant installed
 
 ## Instructions 
 
@@ -13,6 +13,11 @@ Vagrant up
 
 Navigate to: http://localhost:8000/
 
+## Tests
+
+./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/ParserTest
+
+## RPC-API
 
 The package is exposed through Json RPC API because Json is:
  -lightweight;
